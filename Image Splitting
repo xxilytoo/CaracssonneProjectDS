@@ -1,0 +1,38 @@
+
+try {
+			d = ImageIO.read(DominoPicturePanel.class.getResource("/dominos/1.jpg"));
+			d2 = ImageIO.read(DominoPicturePanel.class.getResource("/dominos/2.jpg"));
+			d3 = ImageIO.read(DominoPicturePanel.class.getResource("/dominos/3.jpg"));
+			gone = ImageIO.read(DominoPicturePanel.class.getResource("/dominos/gone.png"));
+			int x = 0;
+			while(x < 28) {
+				if(x < 5) {
+				//5 is how many images per column
+				//the dominos are 181 by 381 px, so adjust those values to the tiles
+					dominos[x] = d.getSubimage(0, 181*x, 381, 181);
+				}
+				else if(x < 10) {
+					dominos[x] = d.getSubimage(381, 181*(x-5), 381, 181);
+				}
+				else if(x < 15) {
+					dominos[x] = d2.getSubimage(0, 181*(x-10), 381, 181);
+				}
+				else if(x < 20) {
+					dominos[x] = d2.getSubimage(381, 181*(x-15), 381, 181);
+				}
+				else if(x < 24) {
+					dominos[x] = d3.getSubimage(0, 181*(x-20), 381, 181);
+				}
+				else if(x < 28) {
+					dominos[x] = d3.getSubimage(381, 181*(x-24), 381, 181);
+				}
+				x++;				
+			}
+			for(int y = 0; y < 28; y++) {
+				dVal.put(dominos[y], vals[y]);
+			}
+			
+		}
+		catch(Exception E) {
+			System.out.println("Error");
+		}

@@ -1,0 +1,95 @@
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.swing.*;
+public class Node
+{
+	private Tile tile;
+	/*
+	private int x;
+	private int y;
+	private int width;
+	private int height;
+	*/
+	private JLabel label;
+	
+	private Node top = null;
+	private Node left = null;
+	private Node right = null;
+	private Node bot = null;
+	private int id;
+	
+	public Node()
+	{
+		
+	}
+	
+	public Node(int id)
+	{		
+		this.id = id;
+	}
+	public Node(Tile tile, int id)
+	{
+		if (tile != null)
+		{
+			this.tile = tile;
+			this.id = id;
+		}
+	}
+	
+	public Node(JLabel label)
+	{
+		this.label = label;
+	}
+	public void setID(int id)
+	{
+		this.id = id;
+	}
+	public int getID()
+	{
+		return id;	
+	}
+	public Node getTop() {
+		return top;
+	}
+	public void setTop(Node top) {
+		this.top = top;
+	}
+	public Node getLeft() {
+		return left;
+	}
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+	public Node getRight() {
+		return right;
+	}
+	public void setRight(Node right) {
+		this.right = right;
+	}
+	public Node getBot() {
+		return bot;
+	}
+	public void setBot(Node bot)
+	{
+		this.bot = bot;
+
+	}
+	public Tile getTile() {
+		return tile;
+	}
+	public void setTile(Tile tile) {
+		this.tile = tile;
+	}
+	public JLabel getLabel() {
+		return label;
+	}
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
+
+}

@@ -1,0 +1,16 @@
+import javax.swing.JLabel;
+
+public class TileLabel extends JLabel
+{	
+	private Player player;
+	
+	public TileLabel(Player player)
+	{
+		this.player = player;				
+	}
+	
+	public Player getPlayer()
+	{
+		return this.player;
+	}
+}

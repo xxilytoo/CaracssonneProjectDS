@@ -1,0 +1,103 @@
+import java.util.ArrayList;
+
+public class CarcassonneGameState
+{
+	private int activePlayerIndex;
+	private boolean isGameStarted;
+	private Player activePlayer;
+	private ArrayList<Player> playerList;
+	private Board board = new Board();
+	
+	TileDeck deck = new TileDeck();
+	
+	public CarcassonneGameState()
+	{
+		isGameStarted = false;
+		playerList = new ArrayList<>();
+		
+		Tile starterTile = drawTile(); 
+		board.setRoot(starterTile); 
+	}
+	
+	public Boolean hasTiles()
+	{
+		return (deck.size() != 0);
+	}
+	
+	public Board getBoard()
+	{
+		return board;
+	}
+	
+	/*public void setPlayersCount(int playerNumber)
+	{
+		this.activePlayerIndex = playerNumber;
+	}
+	
+	public void setActivePlayer(Player activePlayer)
+	{
+		this.activePlayer = activePlayer;
+	}
+	
+	public int getPlayersCount()
+	{
+		return activePlayerIndex;
+	}
+	*/
+	
+	public int getPlayersCount()
+	{
+		return playerList.size();
+	}
+	
+	public boolean getIsGameStarted()
+	{
+		return isGameStarted;
+	}
+	
+	public Player getActivePlayer()
+	{
+		return activePlayer;
+	}
+	
+	public void setPlayers(int count)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			playerList.add(new Player(i));
+		}	
+		
+		activePlayerIndex = 0;
+		activePlayer = playerList.get(0);
+	}	
+	
+	public void changePlayer()
+	{
+		activePlayerIndex++;
+		
+		if(activePlayerIndex > playerList.size()-1)
+			activePlayerIndex = 0;
+		
+		activePlayer = playerList.get(activePlayerIndex);	
+	}
+	
+	public Player getPlayerAt(int playerNum)
+	{
+		int index = playerNum;
+		if(index < 0 || index >= playerList.size())
+			return null;
+		
+		return playerList.get(index);
+	}
+	
+	public Tile drawTile()
+	{
+		return deck.draw();
+	}
+	
+	public TileDeck getTileDeck()
+	{
+		return deck;
+	}
+
+}

@@ -1,0 +1,168 @@
+
+public class Board
+{
+	Node[][] Nodes;
+	Node root;
+	
+	private int width;
+	private int height;
+	
+	public Board()
+	{
+	}
+	
+	public void setRoot(Tile tile)
+	{
+		width = tile.getWidth();
+		height = tile.getHeight();
+		root = new Node(60);
+		root.setTile(tile);
+		
+		Nodes = new Node[11][11];
+		int id = 0;
+		
+		for (int i = 0; i < 11; i++)
+		{
+			for (int j = 0; j < 11; j++)
+			{
+				if (i == 5 && j == 5)
+				{
+					Nodes[i][j] = root;
+				}
+				else
+				{					
+					Node add = new Node(id);
+					Nodes[i][j] = add;
+				}
+				
+				id++;
+			}
+		}
+		
+		linkNodes();	
+	}
+	
+	public Node getRoot()
+	{
+		return root;
+	}
+	
+	private void linkNodes()
+	{
+		for (int i = 0; i < 11; i++)
+		{
+			for (int j = 0; j < 11; j++)
+			{
+				Node currentNode = Nodes[i][j];
+				if (j < 10)
+				{
+					Node rightNode = Nodes[i][j+1];
+					currentNode.setRight(rightNode);
+				}
+				if (j > 0)
+				{
+					Node leftNode = Nodes[i][j-1];
+					currentNode.setLeft(leftNode);
+				}
+				if (i < 10)
+				{
+					Node botNode = Nodes[i+1][j];
+					currentNode.setBot(botNode);
+				}
+				if (i > 0)
+				{
+					Node topNode = Nodes[i-1][j];
+					currentNode.setTop(topNode);
+				}
+			}
+		}
+	}	
+	
+	public Node getNode(int id)
+	{
+		for(int i=0; i< 11; i++)
+		{
+			for(int j=0; j< 11; j++)
+			{
+				Node node = Nodes[i][j];
+				if( node.getID() == id)
+					return node;
+			}
+		}
+		
+		return null;
+	}	
+	
+	public Boolean validateNodeLoc(Node node, Tile currentTile)
+	{
+		if(node != null)			
+		{			
+			Node leftNode = node.getLeft();
+			Node rightNode = node.getRight();
+			Node topNode = node.getTop();
+			Node bottomNode = node.getBot();
+						
+			Tile top =null, left = null, bottom =null, right = null;
+			if( leftNode != null )
+				left = leftNode.getTile();
+			if(rightNode != null)
+				right = rightNode.getTile();	
+			if(topNode != null)
+				top= topNode.getTile();
+			if(bottomNode != null)
+				bottom = bottomNode.getTile();
+			
+			boolean topValid = true;
+			boolean leftValid = true;
+			boolean rightValid = true;
+			boolean bottomValid = true;
+			
+			if (top == null && left == null && right == null && bottom == null)
+			{				
+				return false;
+			}
+			
+			if (top != null)
+			{			
+				int[] topSide = currentTile.getTypes()[0];
+				int[] compareBotSide = top.getTypes()[3];
+				
+				topValid = compareSides(topSide, compareBotSide);				
+			}
+			if (left != null)
+			{				
+				int[] leftSide = currentTile.getTypes()[1];
+				int[] compareRightSide = left.getTypes()[2];
+				
+				leftValid = compareSides(leftSide, compareRightSide);
+			}
+			if (right != null)
+			{				
+				int[] rightSide = currentTile.getTypes()[2];
+				int[] compareLeftSide = right.getTypes()[1];
+				
+				rightValid = compareSides(rightSide, compareLeftSide);
+			}
+			if (bottom != null)
+			{				
+				int[] bottomSide = currentTile.getTypes()[3];
+				int[] compareTopSide = bottom.getTypes()[0];
+				
+				bottomValid = compareSides(bottomSide, compareTopSide);
+			}
+			
+			Boolean validated = (topValid == true && leftValid == true && rightValid == true && bottomValid == true);			
+			return validated;
+		}
+		
+		return false;
+	}
+	
+	private boolean compareSides(int[] sideA, int[] sideB)
+	{		
+			return (sideA[0] == sideB[0] && 
+				sideA[1] == sideB[1] && 
+				sideA[2] == sideB[2]);
+				
+	}
+}
